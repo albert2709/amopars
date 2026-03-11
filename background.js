@@ -1,32 +1,34 @@
-const STORAGE_KEY = 'xpathLogLines';
-const LOG_FILE_NAME = 'xpath_results_log.txt';
-
-function nowStamp() {
+function getTimestampForFileName() {
   const now = new Date();
-  const date = now.toLocaleDateString('ru-RU');
-  const time = now.toLocaleTimeString('ru-RU');
-  return `${date} ${time}`;
+  const pad = (value) => String(value).padStart(2, '0');
+
+  const year = now.getFullYear();
+  const month = pad(now.getMonth() + 1);
+  const day = pad(now.getDate());
+  const hours = pad(now.getHours());
+  const minutes = pad(now.getMinutes());
+  const seconds = pad(now.getSeconds());
+
+  return `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
 }
 
-async function getStoredLines() {
-  const data = await chrome.storage.local.get(STORAGE_KEY);
-  return data[STORAGE_KEY] || [];
+function buildLogFileName() {
+  return `xpath_results_${getTimestampForFileName()}.txt`;
 }
 
-async function saveLines(lines) {
-  await chrome.storage.local.set({ [STORAGE_KEY]: lines });
-}
-
-async function downloadLogFile(lines) {
-  const content = `${lines.join('\n')}\n`;
+async function downloadLogFile(numbers) {
+  const content = `${numbers.join('\n')}\n`;
   const url = `data:text/plain;charset=utf-8,${encodeURIComponent(content)}`;
+  const fileName = buildLogFileName();
 
   await chrome.downloads.download({
     url,
-    filename: LOG_FILE_NAME,
+    filename: fileName,
     saveAs: false,
-    conflictAction: 'overwrite'
+    conflictAction: 'uniquify'
   });
+
+  return fileName;
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
@@ -36,18 +38,12 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 
   (async () => {
     try {
-      const timestamp = nowStamp();
-      const existingLines = await getStoredLines();
-      const newLines = message.numbers.map((number) => `${timestamp} | ${number}`);
-      const updatedLines = [...existingLines, ...newLines];
-
-      await saveLines(updatedLines);
-      await downloadLogFile(updatedLines);
+      const fileName = await downloadLogFile(message.numbers);
 
       sendResponse({
         ok: true,
-        appendedCount: newLines.length,
-        fileName: LOG_FILE_NAME
+        appendedCount: message.numbers.length,
+        fileName
       });
     } catch (error) {
       sendResponse({
