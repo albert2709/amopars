@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "XPath Lead Logger",
+  "version": "1.0.0",
+  "description": "Collects XPath values with 11 digits and saves them to a text file.",
+  "permissions": ["activeTab", "scripting", "downloads"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "XPath Logger"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
