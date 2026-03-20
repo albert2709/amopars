@@ -60,7 +60,7 @@ async function callMoizvonki(account, phone) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ request_data: JSON.stringify(requestData) })
+    body: JSON.stringify(requestData)
   });
 
   if (!response.ok) {

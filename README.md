@@ -26,9 +26,9 @@ Chrome Extension (Manifest V3) с popup и страницей настроек.
 - URL: `https://[domain].moizvonki.ru/api/v1`
 - Метод: `POST`
 - Заголовок: `Content-Type: application/json`
-- В теле уходит объект вида `{ request_data: JSON.stringify({...}) }`
+- В теле уходит JSON-объект напрямую.
 
-Внутри `request_data` отправляются:
+В JSON отправляются:
 
 - `user_name` — email пользователя
 - `api_key` — API ключ
