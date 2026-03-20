@@ -25,7 +25,12 @@ export function isMoizvonkiAccountActive(account) {
 }
 
 export function isWappiAccountActive(account) {
-  return Boolean(account?.enabled !== false && account?.name && account?.apiKey);
+  return Boolean(
+    account?.enabled !== false &&
+      account?.name &&
+      account?.apiKey &&
+      account?.profileId
+  );
 }
 
 export function getActiveAccounts(accounts, validator = isWappiAccountActive) {

@@ -1,7 +1,8 @@
 import {
   DEFAULT_MOIZVONKI_BASE_PATH,
   DEFAULT_MOIZVONKI_DOMAIN,
-  DEFAULT_WAPPI_BASE_URL
+  DEFAULT_WAPPI_BASE_URL,
+  DEFAULT_WAPPI_ENDPOINT_PATH
 } from './config.js';
 import {
   getNextAccount,
@@ -71,22 +72,47 @@ async function callMoizvonki(account, phone) {
   return response.text();
 }
 
-async function sendWappiMessage(account, phone, messageText) {
-  const baseUrl = withFallbackBaseUrl(account.baseUrl, DEFAULT_WAPPI_BASE_URL);
-  const endpoint = account.endpointPath || '/messages/text';
-  const profileQuery = account.profileId ? `?profile_id=${encodeURIComponent(account.profileId)}` : '';
+function createWappiPayload(account, phone, messageText) {
   const payload = {
-    phone,
     body: messageText
   };
 
-  const response = await fetch(`${baseUrl}${endpoint}${profileQuery}`, {
+  if (account.chatId) {
+    payload.chat_id = account.chatId;
+  } else {
+    payload.recipient = phone;
+  }
+
+  const manager = {
+    id: account.managerId || undefined,
+    name: account.managerName || undefined,
+    ava_link: account.managerAvaLink || undefined,
+    description: account.managerDescription || undefined
+  };
+
+  if (Object.values(manager).some(Boolean)) {
+    payload.manager = manager;
+  }
+
+  return payload;
+}
+
+async function sendWappiMessage(account, phone, messageText) {
+  const baseUrl = withFallbackBaseUrl(account.baseUrl, DEFAULT_WAPPI_BASE_URL);
+  const endpoint = account.endpointPath || DEFAULT_WAPPI_ENDPOINT_PATH;
+  const query = new URLSearchParams({ profile_id: account.profileId });
+
+  if (account.botId) {
+    query.set('bot_id', account.botId);
+  }
+
+  const response = await fetch(`${baseUrl}${endpoint}?${query.toString()}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: account.apiKey
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(createWappiPayload(account, phone, messageText))
   });
 
   if (!response.ok) {

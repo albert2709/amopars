@@ -49,13 +49,20 @@ Chrome Extension (Manifest V3) с popup и страницей настроек.
 
 ### Wappi / MAX API
 
-По умолчанию расширение отправляет `POST` в:
+Расширение теперь использует этот формат:
 
-- Base URL: `https://gate.whapi.cloud`
-- Endpoint: `/messages/text`
-- Заголовок: `Authorization: <apiKey>`
-- Query-параметр: `profile_id=<profileId>`
+- Base URL: `https://wappi.pro`
+- Endpoint: `/maxapi/sync/message/send`
+- Метод: `POST`
+- Заголовок: `Authorization: <Token>`
+- Query-параметр `profile_id` обязателен
+- Query-параметр `bot_id` необязателен
 
-Тело запроса: `{ "phone": "...", "body": "..." }`.
+Тело запроса отправляется в JSON:
 
-> Если ваши реальные endpoints отличаются, их можно изменить прямо в настройках для каждого аккаунта.
+- `recipient` — номер из XPath, если не указан `chat_id`
+- `chat_id` — опционально, имеет приоритет над `recipient`
+- `body` — текст сообщения
+- `manager` — опциональный объект с `id`, `name`, `ava_link`, `description`
+
+В настройках Wappi можно задать `profileId`, `botId`, `chatId` и данные `manager`.
