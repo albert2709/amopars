@@ -4,7 +4,7 @@ Chrome Extension (Manifest V3) с popup и страницей настроек.
 
 ## Возможности
 
-- Кнопка **Позвонить** берёт номер телефона по XPath `//div[@class="pipeline_leads__field h-text-overflow"]` на текущей странице.
+- Кнопка **Позвонить** берёт номер телефона по XPath `//input[@class="control-phone__formatted js-form-changes-skip linked-form__cf js-linked-pei text-input prevent-readonly"]` на текущей странице.
 - Кнопка **Отправить SMS** получает тот же номер и отправляет текст через Wappi/MAX API.
 - Кнопка-шестерёнка открывает настройки аккаунтов.
 - Поддерживается несколько аккаунтов для каждого сервиса с ротацией по кругу.

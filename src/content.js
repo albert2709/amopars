@@ -1,4 +1,16 @@
-const PHONE_XPATH = '//div[@class="pipeline_leads__field h-text-overflow"]';
+const PHONE_XPATH = '//input[@class="control-phone__formatted js-form-changes-skip linked-form__cf js-linked-pei text-input prevent-readonly"]';
+
+function readNodeValue(node) {
+  if (!node) {
+    return '';
+  }
+
+  if ('value' in node && typeof node.value === 'string') {
+    return node.value.trim();
+  }
+
+  return node.textContent?.trim() || '';
+}
 
 function extractPhoneFromPage() {
   const result = document.evaluate(
@@ -10,7 +22,7 @@ function extractPhoneFromPage() {
   );
 
   const node = result.singleNodeValue;
-  const rawValue = node?.textContent?.trim() || '';
+  const rawValue = readNodeValue(node);
   const normalizedPhone = rawValue.replace(/[^\d+]/g, '');
 
   return {

@@ -1,4 +1,4 @@
-export const PHONE_XPATH = '//div[@class="pipeline_leads__field h-text-overflow"]';
+export const PHONE_XPATH = '//input[@class="control-phone__formatted js-form-changes-skip linked-form__cf js-linked-pei text-input prevent-readonly"]';
 
 export const DEFAULT_SETTINGS = {
   moizvonkiAccounts: [],
