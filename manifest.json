@@ -7,7 +7,7 @@
   "host_permissions": [
     "<all_urls>",
     "https://www.moizvonki.ru/*",
-    "https://api.moizvonki.ru/*",
+    "https://*.moizvonki.ru/*",
     "https://wappi.pro/*",
     "https://*.wappi.pro/*"
   ],

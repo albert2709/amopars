@@ -21,13 +21,31 @@ Chrome Extension (Manifest V3) с popup и страницей настроек.
 
 ### Мои Звонки
 
-По умолчанию расширение отправляет `POST` в:
+Расширение теперь использует REST API в формате, который вы прислали:
 
-- Base URL: `https://api.moizvonki.ru`
-- Endpoint: `/api/calls/make`
-- Заголовок: `Authorization: Bearer <apiKey>`
+- URL: `https://[domain].moizvonki.ru/api/v1`
+- Метод: `POST`
+- Заголовок: `Content-Type: application/json`
+- В теле уходит объект вида `{ request_data: JSON.stringify({...}) }`
 
-Тело запроса отправляется в JSON с полями `phone`, `from`, `user_id`, `sip_account`.
+Внутри `request_data` отправляются:
+
+- `user_name` — email пользователя
+- `api_key` — API ключ
+- `action` — по умолчанию `calls.make_call`
+- `to` — номер из XPath
+- дополнительные поля `from` / `line` можно передать при необходимости
+
+В настройках аккаунта **Мои Звонки** теперь нужно заполнить:
+
+- название аккаунта
+- email пользователя
+- API ключ
+- поддомен (`test`, `company`, и т.д.)
+- endpoint (по умолчанию `/api/v1`)
+- action (по умолчанию `calls.make_call`)
+
+При необходимости можно задать полный `baseUrl`, тогда поддомен не используется.
 
 ### Wappi / MAX API
 

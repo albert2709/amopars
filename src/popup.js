@@ -1,4 +1,9 @@
-import { getActiveAccounts, getSettings } from './storage.js';
+import {
+  getActiveAccounts,
+  getSettings,
+  isMoizvonkiAccountActive,
+  isWappiAccountActive
+} from './storage.js';
 
 const callButton = document.getElementById('call-button');
 const smsButton = document.getElementById('sms-button');
@@ -14,8 +19,8 @@ function setStatus(text, tone = 'info') {
 
 async function renderState() {
   const settings = await getSettings();
-  const callAccounts = getActiveAccounts(settings.moizvonkiAccounts);
-  const smsAccounts = getActiveAccounts(settings.wappiAccounts);
+  const callAccounts = getActiveAccounts(settings.moizvonkiAccounts, isMoizvonkiAccountActive);
+  const smsAccounts = getActiveAccounts(settings.wappiAccounts, isWappiAccountActive);
 
   callButton.disabled = !callAccounts.length;
   smsButton.disabled = !smsAccounts.length;

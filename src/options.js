@@ -1,4 +1,8 @@
-import { DEFAULT_MOIZVONKI_BASE_URL, DEFAULT_WAPPI_BASE_URL } from './config.js';
+import {
+  DEFAULT_MOIZVONKI_BASE_PATH,
+  DEFAULT_MOIZVONKI_DOMAIN,
+  DEFAULT_WAPPI_BASE_URL
+} from './config.js';
 import { getSettings, saveSettings } from './storage.js';
 
 const state = {
@@ -38,12 +42,14 @@ saveButton.addEventListener('click', async () => {
 function createMoizvonkiAccount(account = {}) {
   return {
     name: account.name || '',
+    userName: account.userName || '',
     apiKey: account.apiKey || '',
-    baseUrl: account.baseUrl || DEFAULT_MOIZVONKI_BASE_URL,
-    endpointPath: account.endpointPath || '/api/calls/make',
+    domain: account.domain || DEFAULT_MOIZVONKI_DOMAIN,
+    endpointPath: account.endpointPath || DEFAULT_MOIZVONKI_BASE_PATH,
+    action: account.action || 'calls.make_call',
     from: account.from || '',
-    userId: account.userId || '',
-    sipAccount: account.sipAccount || '',
+    line: account.line || '',
+    baseUrl: account.baseUrl || '',
     enabled: account.enabled !== false
   };
 }
@@ -68,12 +74,14 @@ function renderAccountCard(type, account, index) {
   const fields = type === 'moizvonki'
     ? [
         ['Название', 'name', account.name],
+        ['Email пользователя', 'userName', account.userName],
         ['API ключ', 'apiKey', account.apiKey],
-        ['Base URL', 'baseUrl', account.baseUrl],
+        ['Поддомен', 'domain', account.domain],
         ['Endpoint', 'endpointPath', account.endpointPath],
-        ['From', 'from', account.from],
-        ['User ID', 'userId', account.userId],
-        ['SIP account', 'sipAccount', account.sipAccount]
+        ['Action', 'action', account.action],
+        ['From (необязательно)', 'from', account.from],
+        ['Line (необязательно)', 'line', account.line],
+        ['Полный Base URL (необязательно)', 'baseUrl', account.baseUrl]
       ]
     : [
         ['Название', 'name', account.name],

@@ -14,12 +14,26 @@ export async function saveSettings(patch) {
   await chrome.storage.sync.set(patch);
 }
 
-export function getActiveAccounts(accounts) {
-  return accounts.filter((account) => account?.enabled !== false && account?.name && account?.apiKey);
+export function isMoizvonkiAccountActive(account) {
+  return Boolean(
+    account?.enabled !== false &&
+      account?.name &&
+      account?.userName &&
+      account?.apiKey &&
+      account?.domain
+  );
 }
 
-export function getNextAccount(accounts, nextIndex) {
-  const activeAccounts = getActiveAccounts(accounts);
+export function isWappiAccountActive(account) {
+  return Boolean(account?.enabled !== false && account?.name && account?.apiKey);
+}
+
+export function getActiveAccounts(accounts, validator = isWappiAccountActive) {
+  return accounts.filter((account) => validator(account));
+}
+
+export function getNextAccount(accounts, nextIndex, validator = isWappiAccountActive) {
+  const activeAccounts = getActiveAccounts(accounts, validator);
   if (!activeAccounts.length) {
     return { account: null, nextIndex: 0, activeAccounts };
   }

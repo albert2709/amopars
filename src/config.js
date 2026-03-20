@@ -8,5 +8,6 @@ export const DEFAULT_SETTINGS = {
   messageTemplate: 'Здравствуйте!'
 };
 
-export const DEFAULT_MOIZVONKI_BASE_URL = 'https://api.moizvonki.ru';
+export const DEFAULT_MOIZVONKI_DOMAIN = 'test';
+export const DEFAULT_MOIZVONKI_BASE_PATH = '/api/v1';
 export const DEFAULT_WAPPI_BASE_URL = 'https://gate.whapi.cloud';

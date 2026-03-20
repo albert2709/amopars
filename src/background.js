@@ -1,5 +1,15 @@
-import { DEFAULT_MOIZVONKI_BASE_URL, DEFAULT_WAPPI_BASE_URL } from './config.js';
-import { getNextAccount, getSettings, saveSettings } from './storage.js';
+import {
+  DEFAULT_MOIZVONKI_BASE_PATH,
+  DEFAULT_MOIZVONKI_DOMAIN,
+  DEFAULT_WAPPI_BASE_URL
+} from './config.js';
+import {
+  getNextAccount,
+  getSettings,
+  isMoizvonkiAccountActive,
+  isWappiAccountActive,
+  saveSettings
+} from './storage.js';
 
 async function getPhoneFromActiveTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -19,23 +29,38 @@ function withFallbackBaseUrl(url, fallback) {
   return (url || fallback).replace(/\/$/, '');
 }
 
+function getMoizvonkiUrl(account) {
+  if (account.baseUrl) {
+    return withFallbackBaseUrl(account.baseUrl, `https://${DEFAULT_MOIZVONKI_DOMAIN}.moizvonki.ru`) + (account.endpointPath || DEFAULT_MOIZVONKI_BASE_PATH);
+  }
+
+  const domain = (account.domain || DEFAULT_MOIZVONKI_DOMAIN).trim();
+  const basePath = account.endpointPath || DEFAULT_MOIZVONKI_BASE_PATH;
+  return `https://${domain}.moizvonki.ru${basePath}`;
+}
+
 async function callMoizvonki(account, phone) {
-  const baseUrl = withFallbackBaseUrl(account.baseUrl, DEFAULT_MOIZVONKI_BASE_URL);
-  const endpoint = account.endpointPath || '/api/calls/make';
-  const payload = {
-    phone,
-    from: account.from || undefined,
-    user_id: account.userId || undefined,
-    sip_account: account.sipAccount || undefined
+  const requestData = {
+    user_name: account.userName,
+    api_key: account.apiKey,
+    action: account.action || 'calls.make_call',
+    to: phone
   };
 
-  const response = await fetch(`${baseUrl}${endpoint}`, {
+  if (account.from) {
+    requestData.from = account.from;
+  }
+
+  if (account.line) {
+    requestData.line = account.line;
+  }
+
+  const response = await fetch(getMoizvonkiUrl(account), {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${account.apiKey}`
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({ request_data: JSON.stringify(requestData) })
   });
 
   if (!response.ok) {
@@ -77,7 +102,8 @@ async function handleAction(action, messageText) {
   const isCall = action === 'call';
   const accountKey = isCall ? 'moizvonkiAccounts' : 'wappiAccounts';
   const indexKey = isCall ? 'nextMoizvonkiIndex' : 'nextWappiIndex';
-  const { account, nextIndex, activeAccounts } = getNextAccount(settings[accountKey], settings[indexKey]);
+  const validator = isCall ? isMoizvonkiAccountActive : isWappiAccountActive;
+  const { account, nextIndex, activeAccounts } = getNextAccount(settings[accountKey], settings[indexKey], validator);
 
   if (!account) {
     throw new Error(isCall ? 'Нет активных аккаунтов Мои Звонки.' : 'Нет активных аккаунтов Wappi.');
