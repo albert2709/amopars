@@ -59,13 +59,10 @@ function createWappiAccount(account = {}) {
   return {
     name: account.name || '',
     apiKey: account.apiKey || '',
-    profileId: account.profileId || '',
-    botId: account.botId || '',
-    chatId: account.chatId || '',
-    managerId: account.managerId || '',
-    managerName: account.managerName || '',
-    managerAvaLink: account.managerAvaLink || '',
-    managerDescription: account.managerDescription || '',
+    cascadeId: account.cascadeId || '',
+    caption: account.caption || '',
+    fileName: account.fileName || '',
+    url: account.url || '',
     baseUrl: account.baseUrl || DEFAULT_WAPPI_BASE_URL,
     endpointPath: account.endpointPath || DEFAULT_WAPPI_ENDPOINT_PATH,
     enabled: account.enabled !== false
@@ -93,13 +90,10 @@ function renderAccountCard(type, account, index) {
     : [
         ['Название', 'name', account.name],
         ['API ключ', 'apiKey', account.apiKey],
-        ['Profile ID', 'profileId', account.profileId],
-        ['Bot ID (необязательно)', 'botId', account.botId],
-        ['Chat ID (необязательно)', 'chatId', account.chatId],
-        ['Manager ID (необязательно)', 'managerId', account.managerId],
-        ['Manager name (необязательно)', 'managerName', account.managerName],
-        ['Manager avatar link (необязательно)', 'managerAvaLink', account.managerAvaLink],
-        ['Manager description (необязательно)', 'managerDescription', account.managerDescription],
+        ['Cascade ID', 'cascadeId', account.cascadeId],
+        ['Caption (необязательно)', 'caption', account.caption],
+        ['File name (необязательно)', 'fileName', account.fileName],
+        ['URL файла (необязательно)', 'url', account.url],
         ['Base URL', 'baseUrl', account.baseUrl],
         ['Endpoint', 'endpointPath', account.endpointPath]
       ];

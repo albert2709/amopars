@@ -29,7 +29,7 @@ export function isWappiAccountActive(account) {
     account?.enabled !== false &&
       account?.name &&
       account?.apiKey &&
-      account?.profileId
+      account?.cascadeId
   );
 }
 

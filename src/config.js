@@ -11,4 +11,4 @@ export const DEFAULT_SETTINGS = {
 export const DEFAULT_MOIZVONKI_DOMAIN = 'test';
 export const DEFAULT_MOIZVONKI_BASE_PATH = '/api/v1';
 export const DEFAULT_WAPPI_BASE_URL = 'https://wappi.pro';
-export const DEFAULT_WAPPI_ENDPOINT_PATH = '/maxapi/sync/message/send';
+export const DEFAULT_WAPPI_ENDPOINT_PATH = '/csender/cascade/send';

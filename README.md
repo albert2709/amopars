@@ -49,20 +49,20 @@ Chrome Extension (Manifest V3) с popup и страницей настроек.
 
 ### Wappi / MAX API
 
-Расширение теперь использует этот формат:
+Для отправки сообщения каскадом расширение использует:
 
 - Base URL: `https://wappi.pro`
-- Endpoint: `/maxapi/sync/message/send`
+- Endpoint: `/csender/cascade/send`
 - Метод: `POST`
 - Заголовок: `Authorization: <Token>`
-- Query-параметр `profile_id` обязателен
-- Query-параметр `bot_id` необязателен
 
 Тело запроса отправляется в JSON:
 
-- `recipient` — номер из XPath, если не указан `chat_id`
-- `chat_id` — опционально, имеет приоритет над `recipient`
-- `body` — текст сообщения
-- `manager` — опциональный объект с `id`, `name`, `ava_link`, `description`
+- `recipient` — номер из XPath
+- `body` — текст сообщения из настроек / popup
+- `cascade_id` — задаётся в настройках аккаунта
+- `caption` — необязательное поле
+- `file_name` — необязательное поле
+- `url` — необязательное поле
 
-В настройках Wappi можно задать `profileId`, `botId`, `chatId` и данные `manager`.
+Для активации Wappi-аккаунта теперь обязательны: название, API ключ и `cascadeId`.

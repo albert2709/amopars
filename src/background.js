@@ -73,40 +73,21 @@ async function callMoizvonki(account, phone) {
 }
 
 function createWappiPayload(account, phone, messageText) {
-  const payload = {
-    body: messageText
+  return {
+    recipient: phone,
+    body: messageText,
+    cascade_id: account.cascadeId,
+    caption: account.caption || '',
+    file_name: account.fileName || '',
+    url: account.url || ''
   };
-
-  if (account.chatId) {
-    payload.chat_id = account.chatId;
-  } else {
-    payload.recipient = phone;
-  }
-
-  const manager = {
-    id: account.managerId || undefined,
-    name: account.managerName || undefined,
-    ava_link: account.managerAvaLink || undefined,
-    description: account.managerDescription || undefined
-  };
-
-  if (Object.values(manager).some(Boolean)) {
-    payload.manager = manager;
-  }
-
-  return payload;
 }
 
 async function sendWappiMessage(account, phone, messageText) {
   const baseUrl = withFallbackBaseUrl(account.baseUrl, DEFAULT_WAPPI_BASE_URL);
   const endpoint = account.endpointPath || DEFAULT_WAPPI_ENDPOINT_PATH;
-  const query = new URLSearchParams({ profile_id: account.profileId });
 
-  if (account.botId) {
-    query.set('bot_id', account.botId);
-  }
-
-  const response = await fetch(`${baseUrl}${endpoint}?${query.toString()}`, {
+  const response = await fetch(`${baseUrl}${endpoint}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
