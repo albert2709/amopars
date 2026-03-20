@@ -1,4 +1,4 @@
-export const PHONE_XPATH = '//input[@class="control-phone__formatted js-form-changes-skip linked-form__cf js-linked-pei text-input prevent-readonly"]';
+export const PHONE_XPATH = "//input[contains(@class, 'control-phone__formatted js-form-changes-skip')]";
 
 export const DEFAULT_SETTINGS = {
   moizvonkiAccounts: [],

@@ -1,4 +1,4 @@
-const PHONE_XPATH = '//input[@class="control-phone__formatted js-form-changes-skip linked-form__cf js-linked-pei text-input prevent-readonly"]';
+const PHONE_XPATH = "//input[contains(@class, 'control-phone__formatted js-form-changes-skip')]";
 
 function readNodeValue(node) {
   if (!node) {
