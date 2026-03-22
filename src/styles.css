@@ -130,3 +130,5 @@ button:disabled {
 .preset-button { background: #e0f2fe; color: #0f172a; padding: 8px 10px; }
 .hint-text { color: var(--muted); font-size: 12px; }
 .empty-state { color: var(--muted); font-size: 12px; margin: 0; }
+
+.last-sms-info { margin-top: 6px; }

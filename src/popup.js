@@ -13,6 +13,7 @@ const statusNode = document.getElementById('status');
 const queueNode = document.getElementById('queue-info');
 const messageField = document.getElementById('message-text');
 const presetButtonsNode = document.getElementById('preset-buttons');
+const lastSmsInfoNode = document.getElementById('last-sms-info');
 
 function setStatus(text, tone = 'info') {
   statusNode.textContent = text;
@@ -46,6 +47,16 @@ function renderPresetButtons(presets) {
   });
 }
 
+function renderLastSmsInfo(lastSmsInfo) {
+  if (!lastSmsInfo?.phone) {
+    lastSmsInfoNode.textContent = 'Последняя SMS ещё не отправлялась.';
+    return;
+  }
+
+  const sentAt = lastSmsInfo.sentAt ? new Date(lastSmsInfo.sentAt).toLocaleString('ru-RU') : 'без времени';
+  lastSmsInfoNode.textContent = `Последняя SMS: ${lastSmsInfo.phone} · ${sentAt}`;
+}
+
 async function renderState() {
   const settings = await getSettings();
   const callAccounts = getActiveAccounts(settings.moizvonkiAccounts, isMoizvonkiAccountActive);
@@ -55,6 +66,7 @@ async function renderState() {
   smsButton.disabled = !smsAccounts.length;
   messageField.value = settings.messageTemplate || '';
   renderPresetButtons(settings.messagePresets);
+  renderLastSmsInfo(settings.lastSmsInfo);
 
   queueNode.textContent = [
     `Мои Звонки: ${callAccounts.length} активных`,

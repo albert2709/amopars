@@ -6,7 +6,8 @@ export const DEFAULT_SETTINGS = {
   nextMoizvonkiIndex: 0,
   nextWappiIndex: 0,
   messageTemplate: 'Здравствуйте!',
-  messagePresets: []
+  messagePresets: [],
+  lastSmsInfo: null
 };
 
 export const DEFAULT_MOIZVONKI_DOMAIN = 'test';

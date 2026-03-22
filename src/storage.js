@@ -7,7 +7,8 @@ export async function getSettings() {
     ...data,
     moizvonkiAccounts: Array.isArray(data.moizvonkiAccounts) ? data.moizvonkiAccounts : [],
     wappiAccounts: Array.isArray(data.wappiAccounts) ? data.wappiAccounts : [],
-    messagePresets: Array.isArray(data.messagePresets) ? data.messagePresets : []
+    messagePresets: Array.isArray(data.messagePresets) ? data.messagePresets : [],
+    lastSmsInfo: data.lastSmsInfo && typeof data.lastSmsInfo === 'object' ? data.lastSmsInfo : null
   };
 }
 

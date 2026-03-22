@@ -123,7 +123,19 @@ async function handleAction(action, messageText) {
     ? await callMoizvonki(account, phone)
     : await sendWappiMessage(account, phone, resolvedMessage);
 
-  await saveSettings({ [indexKey]: nextIndex });
+  await saveSettings(
+    isCall
+      ? { [indexKey]: nextIndex }
+      : {
+          [indexKey]: nextIndex,
+          lastSmsInfo: {
+            phone,
+            accountName: account.name,
+            resolvedMessage,
+            sentAt: new Date().toISOString()
+          }
+        }
+  );
 
   return {
     ok: true,
