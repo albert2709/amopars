@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Настройки amoPars</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="options-body">
+    <main class="options-page">
+      <section>
+        <h1>Настройки аккаунтов</h1>
+        <p class="subtitle">Добавляйте, отключайте и удаляйте аккаунты для звонков и SMS.</p>
+      </section>
+
+      <section class="settings-section">
+        <div class="section-header">
+          <h2>Мои Звонки</h2>
+          <button id="add-moizvonki" class="primary-button small">Добавить аккаунт</button>
+        </div>
+        <div id="moizvonki-list" class="account-list"></div>
+      </section>
+
+      <section class="settings-section">
+        <div class="section-header">
+          <h2>Wappi</h2>
+          <button id="add-wappi" class="primary-button small">Добавить аккаунт</button>
+        </div>
+        <div id="wappi-list" class="account-list"></div>
+      </section>
+
+      <section class="settings-section">
+        <div class="section-header">
+          <h2>Шаблоны сообщений</h2>
+          <button id="add-preset" class="primary-button small">Добавить шаблон</button>
+        </div>
+        <p class="subtitle">Можно использовать спинтакс, например: {Здравствуйте|Добрый день}!</p>
+        <div id="preset-list" class="account-list"></div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Общие настройки</h2>
+        <label class="field-label" for="default-message">Сообщение по умолчанию</label>
+        <textarea id="default-message" rows="4"></textarea>
+      </section>
+
+      <div class="footer-actions">
+        <button id="save-settings" class="primary-button">Сохранить</button>
+        <span id="save-status" class="status" aria-live="polite"></span>
+      </div>
+    </main>
+    <script type="module" src="./options.js"></script>
+  </body>
+</html>

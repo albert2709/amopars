@@ -1,0 +1,134 @@
+:root {
+  color-scheme: light;
+  --bg: #f3f5f9;
+  --card: #ffffff;
+  --line: #d9deea;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #0f766e;
+  --danger: #dc2626;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.popup-body { min-width: 340px; }
+.popup-card,
+.options-page {
+  padding: 18px;
+}
+
+.popup-card {
+  position: relative;
+  background: var(--card);
+}
+
+h1,h2,p { margin-top: 0; }
+.subtitle { color: var(--muted); font-size: 14px; }
+textarea,
+input[type='text'] {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  background: #fff;
+}
+
+.field-label, label span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.actions,
+.footer-actions,
+.section-header,
+.account-card-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actions { margin-top: 16px; }
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.primary-button { background: var(--primary); color: #fff; }
+.primary-button:hover:not(:disabled) { background: var(--primary-dark); }
+.secondary-button { background: var(--secondary); color: #fff; }
+.danger-button { background: #fee2e2; color: var(--danger); }
+.small { padding: 8px 10px; }
+.icon-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  background: #eef2ff;
+}
+.status {
+  margin-top: 14px;
+  font-size: 13px;
+  min-height: 18px;
+}
+.status[data-tone='error'] { color: var(--danger); }
+.status[data-tone='success'] { color: #15803d; }
+.status[data-tone='warning'] { color: #b45309; }
+.queue-info { margin-top: 8px; color: var(--muted); font-size: 12px; }
+
+.options-page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.settings-section {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.account-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+.account-card {
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.compact { align-items: baseline; }
+.preset-section { margin-top: 14px; }
+.preset-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.preset-button { background: #e0f2fe; color: #0f172a; padding: 8px 10px; }
+.hint-text { color: var(--muted); font-size: 12px; }
+.empty-state { color: var(--muted); font-size: 12px; margin: 0; }
+
+.last-sms-info { margin-top: 6px; }

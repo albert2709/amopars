@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>amoPars Caller & SMS</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="popup-body">
+    <main class="popup-card">
+      <button id="open-settings" class="icon-button" title="Настройки" aria-label="Настройки">⚙</button>
+      <h1>amoPars</h1>
+      <p class="subtitle">Получение номера по XPath и отправка в API.</p>
+
+      <label class="field-label" for="message-text">Текст SMS / MAX</label>
+      <textarea id="message-text" rows="4" placeholder="Введите текст сообщения или спинтакс {Привет|Здравствуйте}"></textarea>
+
+      <section class="preset-section">
+        <div class="section-header compact">
+          <h2>Шаблоны</h2>
+          <span class="hint-text">Кнопки заполняют поле сообщения</span>
+        </div>
+        <div id="preset-buttons" class="preset-buttons"></div>
+      </section>
+
+      <div class="actions">
+        <button id="call-button" class="primary-button">Позвонить</button>
+        <button id="sms-button" class="secondary-button">Отправить SMS</button>
+      </div>
+
+      <div id="status" class="status" aria-live="polite"></div>
+      <div id="queue-info" class="queue-info"></div>
+      <div id="last-sms-info" class="queue-info last-sms-info"></div>
+    </main>
+    <script type="module" src="./popup.js"></script>
+  </body>
+</html>
