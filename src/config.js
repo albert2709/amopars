@@ -5,10 +5,12 @@ export const DEFAULT_SETTINGS = {
   wappiAccounts: [],
   nextMoizvonkiIndex: 0,
   nextWappiIndex: 0,
-  messageTemplate: 'Здравствуйте!'
+  messageTemplate: 'Здравствуйте!',
+  messagePresets: []
 };
 
 export const DEFAULT_MOIZVONKI_DOMAIN = 'test';
 export const DEFAULT_MOIZVONKI_BASE_PATH = '/api/v1';
 export const DEFAULT_WAPPI_BASE_URL = 'https://wappi.pro';
 export const DEFAULT_WAPPI_ENDPOINT_PATH = '/csender/cascade/send';
+export const MAX_PRESET_LABEL_LENGTH = 16;

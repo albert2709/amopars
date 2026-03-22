@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS } from './config.js';
+import { DEFAULT_SETTINGS, MAX_PRESET_LABEL_LENGTH } from './config.js';
 
 export async function getSettings() {
   const data = await chrome.storage.sync.get(DEFAULT_SETTINGS);
@@ -6,12 +6,17 @@ export async function getSettings() {
     ...DEFAULT_SETTINGS,
     ...data,
     moizvonkiAccounts: Array.isArray(data.moizvonkiAccounts) ? data.moizvonkiAccounts : [],
-    wappiAccounts: Array.isArray(data.wappiAccounts) ? data.wappiAccounts : []
+    wappiAccounts: Array.isArray(data.wappiAccounts) ? data.wappiAccounts : [],
+    messagePresets: Array.isArray(data.messagePresets) ? data.messagePresets : []
   };
 }
 
 export async function saveSettings(patch) {
   await chrome.storage.sync.set(patch);
+}
+
+export function normalizePresetLabel(label) {
+  return String(label || '').trim().slice(0, MAX_PRESET_LABEL_LENGTH);
 }
 
 export function isMoizvonkiAccountActive(account) {

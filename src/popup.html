@@ -13,7 +13,15 @@
       <p class="subtitle">Получение номера по XPath и отправка в API.</p>
 
       <label class="field-label" for="message-text">Текст SMS / MAX</label>
-      <textarea id="message-text" rows="4" placeholder="Введите текст сообщения"></textarea>
+      <textarea id="message-text" rows="4" placeholder="Введите текст сообщения или спинтакс {Привет|Здравствуйте}"></textarea>
+
+      <section class="preset-section">
+        <div class="section-header compact">
+          <h2>Шаблоны</h2>
+          <span class="hint-text">Кнопки заполняют поле сообщения</span>
+        </div>
+        <div id="preset-buttons" class="preset-buttons"></div>
+      </section>
 
       <div class="actions">
         <button id="call-button" class="primary-button">Позвонить</button>

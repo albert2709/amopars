@@ -11,6 +11,7 @@ import {
   isWappiAccountActive,
   saveSettings
 } from './storage.js';
+import { applySpintax } from './messages.js';
 
 async function getPhoneFromActiveTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -117,9 +118,10 @@ async function handleAction(action, messageText) {
   }
 
   const phone = await getPhoneFromActiveTab();
+  const resolvedMessage = isCall ? '' : applySpintax(messageText || settings.messageTemplate || '');
   const result = isCall
     ? await callMoizvonki(account, phone)
-    : await sendWappiMessage(account, phone, messageText || settings.messageTemplate || '');
+    : await sendWappiMessage(account, phone, resolvedMessage);
 
   await saveSettings({ [indexKey]: nextIndex });
 
@@ -128,7 +130,8 @@ async function handleAction(action, messageText) {
     phone,
     accountName: account.name,
     queueSize: activeAccounts.length,
-    result
+    result,
+    resolvedMessage
   };
 }
 

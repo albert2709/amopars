@@ -123,3 +123,10 @@ button:disabled {
   align-items: center;
   gap: 8px;
 }
+
+.compact { align-items: baseline; }
+.preset-section { margin-top: 14px; }
+.preset-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.preset-button { background: #e0f2fe; color: #0f172a; padding: 8px 10px; }
+.hint-text { color: var(--muted); font-size: 12px; }
+.empty-state { color: var(--muted); font-size: 12px; margin: 0; }
